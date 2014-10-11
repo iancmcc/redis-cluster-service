@@ -1,0 +1,59 @@
+{
+    "Title": "redis-cluster",
+    "Description": "Redis 3.0.0-rc1 Cluster",
+    "RAMCommitment": 268435456,
+    "CPUCommitment": 1,
+    "Launch": "auto",
+    "Name": "Redis Cluster",
+    "Version": "3.0.0-rc1",
+    "Command": "redis-server /etc/redis.conf",
+    "Endpoints": [
+        {
+            "Name": "redis",
+            "Application": "redis",
+            "PortNumber": 6379,
+            "Protocol": "tcp",
+            "Purpose": "export"
+        },
+        {
+            "Name": "redis-bus",
+            "Application": "redis-bus",
+            "PortNumber": 16379,
+            "Protocol": "tcp",
+            "Purpose": "export"
+        },
+        {
+            "Name": "redis-command",
+            "Application": "redis",
+            "PortNumber": 6379,
+            "Protocol": "tcp",
+            "Purpose": "import_all"
+        },
+        {
+            "Name": "redis-cluster",
+            "Application": "redis-bus",
+            "PortNumber": 16379,
+            "Protocol": "tcp",
+            "Purpose": "import_all"
+        }
+    ],
+    "ImageID": "iancmcc/redis-cluster:3.0.0-rc1",
+    "Instances": {
+        "min": 3
+    },
+    "LogConfigs": [
+        {
+            "path": "/tmp/redis.log",
+            "type": "redis"
+        }
+    ],
+    "Volumes": [
+        {
+            "#####":         "drwxrwxr-x  3 redis redis 4.0K Jul 24 01:54 data",
+            "Owner":         "redis:redis",
+            "Permission":    "0775",
+            "ResourcePath":  "redis-{{.InstanceID}}",
+            "ContainerPath": "/data"
+        }
+    ]
+}
