@@ -7,11 +7,13 @@
     "Name": "Redis Cluster",
     "Version": "3.0.0-rc1",
     "Command": "redis-server /etc/redis.conf",
+    "Hostname": "localhost",
     "Endpoints": [
         {
             "Name": "redis",
             "Application": "redis",
             "PortNumber": 6379,
+            "PortTemplate": "{{ plus 6379 .InstanceID }}",
             "Protocol": "tcp",
             "Purpose": "export"
         },
@@ -19,6 +21,7 @@
             "Name": "redis-bus",
             "Application": "redis-bus",
             "PortNumber": 16379,
+            "PortTemplate": "{{ plus 16379 .InstanceID }}",
             "Protocol": "tcp",
             "Purpose": "export"
         },
@@ -39,7 +42,7 @@
     ],
     "ImageID": "iancmcc/redis-cluster:3.0.0-rc1",
     "Instances": {
-        "min": 3
+        "min": 6
     },
     "LogConfigs": [
         {
@@ -52,7 +55,7 @@
             "#####":         "drwxrwxr-x  3 redis redis 4.0K Jul 24 01:54 data",
             "Owner":         "redis:redis",
             "Permission":    "0775",
-            "ResourcePath":  "redis-{{.InstanceID}}",
+            "ResourcePath":  "redis",
             "ContainerPath": "/data"
         }
     ]

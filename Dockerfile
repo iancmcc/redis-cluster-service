@@ -10,10 +10,11 @@ RUN apt-get update \
 ENV REDIS_VERSION 3.0.0-rc1
 ENV REDIS_DOWNLOAD_URL https://github.com/antirez/redis/archive/3.0.0-rc1.tar.gz
 
-RUN BUILD_DEPS="gcc libc6-dev make ruby"; \
+RUN BUILD_DEPS="gcc libc6-dev make"; \
     set -x; \
-    apt-get update && apt-get install -y $BUILD_DEPS --no-install-recommends \
+    apt-get update && apt-get install -y ruby $BUILD_DEPS --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
+    && gem install --no-ri --no-rdoc redis \
     && mkdir -p /usr/src/redis \
     && curl -sSL "$REDIS_DOWNLOAD_URL" -o redis.tar.gz \
     && tar -xzf redis.tar.gz -C /usr/src/redis --strip-components=1 \
