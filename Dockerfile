@@ -7,8 +7,8 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 
-ENV REDIS_VERSION 3.0.0-rc1
-ENV REDIS_DOWNLOAD_URL https://github.com/antirez/redis/archive/3.0.0-rc1.tar.gz
+ENV REDIS_VERSION 3.0.0-rc3
+ENV REDIS_DOWNLOAD_URL https://github.com/antirez/redis/archive/3.0.0-rc3.tar.gz
 
 RUN BUILD_DEPS="gcc libc6-dev make"; \
     set -x; \
@@ -21,7 +21,6 @@ RUN BUILD_DEPS="gcc libc6-dev make"; \
     && rm redis.tar.gz \
     && make -C /usr/src/redis \
     && make -C /usr/src/redis install \
-    && ln -s redis-server "$(dirname "$(which redis-server)")/redis-sentinel" \
     && cp /usr/src/redis/src/redis-trib.rb /usr/local/bin \
     && chmod a+x /usr/local/bin/redis-trib.rb \
     && rm -r /usr/src/redis \
@@ -30,4 +29,3 @@ RUN BUILD_DEPS="gcc libc6-dev make"; \
 
 RUN mkdir /data && chown redis:redis /data
 WORKDIR /data
-EXPOSE 6379
