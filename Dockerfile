@@ -1,9 +1,11 @@
 FROM       ubuntu:trusty
 MAINTAINER Ian McCracken <ian.mccracken@gmail.com>
 
+ENV TERM xterm
+
 RUN groupadd -r redis && useradd -r -g redis redis
 RUN apt-get update \
-    && apt-get install -y curl \
+    && apt-get install -y curl iptables\
     && rm -rf /var/lib/apt/lists/*
 
 

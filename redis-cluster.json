@@ -36,8 +36,8 @@
            "Name": "redis",
            "Purpose": "export",
            "Protocol": "tcp",
-           "PortNumber": 6379,
-           "PortTemplate": "{{ plus 6379 .InstanceID }}",
+           "PortNumber": 6380,
+           "PortTemplate": "{{ plus 6380 .InstanceID }}",
            "VirtualAddress": "",
            "Application": "redis",
            "ApplicationTemplate": "",
@@ -51,8 +51,8 @@
            "Name": "redis-bus",
            "Purpose": "export",
            "Protocol": "tcp",
-           "PortNumber": 16379,
-           "PortTemplate": "{{ plus 16379 .InstanceID }}",
+           "PortNumber": 16380,
+           "PortTemplate": "{{ plus 16380 .InstanceID }}",
            "VirtualAddress": "",
            "Application": "redis-bus",
            "ApplicationTemplate": "",
@@ -66,31 +66,15 @@
            "Name": "redis-command",
            "Purpose": "import_all",
            "Protocol": "tcp",
-           "PortNumber": 6379,
-           "PortTemplate": "",
-           "VirtualAddress": "",
            "Application": "redis",
-           "ApplicationTemplate": "",
-           "AddressConfig": {
-             "Port": 0,
-             "Protocol": ""
-           },
-           "VHosts": null
+           "PortNumber": 6380
          },
          {
            "Name": "redis-cluster",
+           "Application": "redis-bus",
            "Purpose": "import_all",
            "Protocol": "tcp",
-           "PortNumber": 16379,
-           "PortTemplate": "",
-           "VirtualAddress": "",
-           "Application": "redis-bus",
-           "ApplicationTemplate": "",
-           "AddressConfig": {
-             "Port": 0,
-             "Protocol": ""
-           },
-           "VHosts": null
+           "PortNumber": 16380
          }
        ],
        "Services": [],

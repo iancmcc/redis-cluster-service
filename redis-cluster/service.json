@@ -1,11 +1,11 @@
 {
     "Title": "redis-cluster",
-    "Description": "Redis 3.0.0-rc1 Cluster",
-    "RAMCommitment": 268435456,
+    "Description": "Redis 3.0.0-rc3 Cluster",
+    "RAMCommitment": "4G",
     "CPUCommitment": 1,
     "Launch": "auto",
     "Name": "Redis Cluster",
-    "Version": "3.0.0-rc1",
+    "Version": "3.0.0-rc3",
     "Command": "redis-server /etc/redis.conf",
     "Hostname": "localhost",
     "Endpoints": [
@@ -30,19 +30,29 @@
             "Application": "redis",
             "PortNumber": 6379,
             "Protocol": "tcp",
-            "Purpose": "import_all"
+            "Purpose": "import_all",
+            "VirtualAddress": "r{{plus 1 .InstanceID}}:6379"
         },
         {
             "Name": "redis-cluster",
             "Application": "redis-bus",
             "PortNumber": 16379,
             "Protocol": "tcp",
-            "Purpose": "import_all"
+            "Purpose": "import_all",
+            "VirtualAddress": "r{{plus 1 .InstanceID}}:16379"
         }
     ],
-    "ImageID": "iancmcc/redis-cluster:3.0.0-rc1",
+    "Hostname": "r{{plus 1 .InstanceID}}",
+    "Privileged": true,
+    "ImageID": "iancmcc/redis-cluster:3.0.0-rc3",
     "Instances": {
         "min": 6
+    },
+    "HealthChecks": {
+      "PING": {
+        "Script": "redis-cli -p {{ plus 6379 .InstanceID }} PING | grep PONG",
+        "Interval": 10.0
+      }
     },
     "LogConfigs": [
         {
